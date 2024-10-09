@@ -39,6 +39,7 @@ obj-$(CONFIG_CMD_BUTTON) += button.o
 obj-$(CONFIG_CMD_CACHE) += cache.o
 obj-$(CONFIG_CMD_CBFS) += cbfs.o
 obj-$(CONFIG_CMD_CLK) += clk.o
+obj-$(CONFIG_CMD_CM33) += cm33.o
 obj-$(CONFIG_CMD_CLS) += cls.o
 obj-$(CONFIG_CMD_CONFIG) += config.o
 obj-$(CONFIG_CMD_CONITRACE) += conitrace.o
@@ -212,10 +213,7 @@ obj-$(CONFIG_$(SPL_)CMD_TLV_EEPROM) += tlv_eeprom.o
 
 # core command
 obj-y += nvedit.o
-obj-$(CONFIG_CMD_ECC) += ecc.o
-obj-$(CONFIG_CMD_RZG2L_ECC) += rzg2l_ecc.o
-obj-$(CONFIG_CMD_EVK) += evk.o
-
+obj-y += ecc.o
 
 obj-$(CONFIG_CMD_BCM_EXT_UTILS) += broadcom/
 

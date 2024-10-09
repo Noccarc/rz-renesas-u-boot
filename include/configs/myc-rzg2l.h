@@ -3,8 +3,8 @@
  * Copyright (C) 2015 Renesas Electronics Corporation
  */
 
-#ifndef __SMARC_RZG2L_H
-#define __SMARC_RZG2L_H
+#ifndef __MYC_RZG2L_H
+#define __MYC_RZG2L_H
 
 #include <asm/arch/rmobile.h>
 
@@ -43,11 +43,11 @@
 
 #define DRAM_RSV_SIZE			0x08000000
 #define CONFIG_SYS_SDRAM_BASE		(0x40000000 + DRAM_RSV_SIZE)
-#define CONFIG_SYS_SDRAM_SIZE		(0x80000000u - DRAM_RSV_SIZE) //total 2GB
+#define CONFIG_SYS_SDRAM_SIZE		(CONFIG_SYS_DDR4SIZE - DRAM_RSV_SIZE)
 #define CONFIG_SYS_LOAD_ADDR		0x58000000
 #define CONFIG_LOADADDR			CONFIG_SYS_LOAD_ADDR // Default load address for tfpt,bootp...
 #define CONFIG_VERY_BIG_RAM
-#define CONFIG_MAX_MEM_MAPPED		(0x80000000u - DRAM_RSV_SIZE)
+#define CONFIG_MAX_MEM_MAPPED		(CONFIG_SYS_DDR4SIZE - DRAM_RSV_SIZE)
 
 #define CONFIG_SYS_MONITOR_BASE		0x00000000
 #define CONFIG_SYS_MONITOR_LEN		(1 * 1024 * 1024)
@@ -60,14 +60,23 @@
 /* ENV setting */
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
-	"usb_pgood_delay=2000\0" \
 	"bootm_size=0x10000000 \0" \
-	"prodsdbootargs=setenv bootargs rw quite rootwait earlycon root=/dev/mmcblk1p2 \0" \
-	"prodemmcbootargs=setenv bootargs rw quite rootwait earlycon root=/dev/mmcblk0p2 \0" \
+	"prodsdbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk1p2 \0" \
+	"prodemmcbootargs=setenv bootargs rw rootwait earlycon root=/dev/mmcblk0p2 \0" \
 	"bootimage=unzip 0x4A080000 0x48080000; booti 0x48080000 - 0x48000000 \0" \
-	"emmcload=ext4load mmc 0:2 0x48080000 boot/Image;ext4load mmc 0:2 0x48000000 boot/r9a07g044l2-smarc.dtb;run prodemmcbootargs \0" \
-	"sd1load=ext4load mmc 1:2 0x48080000 boot/Image;ext4load mmc 1:2 0x48000000 boot/r9a07g044l2-smarc.dtb;run prodsdbootargs \0" \
-	"bootcmd_check=if mmc dev 1; then run sd1load; else run emmcload; fi \0"
+	"loadaddr=0x48080000 \0" \
+	"fdtaddr=0x48000000 \0" \
+	"script=boot.scr\0" \
+	"image=Image\0" \
+	"fdt_file=" CONFIG_DEFAULT_FDT_FILE "\0" \
+	"mmcload=fatload  mmc 0:1 ${loadaddr} ${image};fatload  mmc 0:1 ${fdtaddr} ${fdt_file};run prodemmcbootargs \0" \
+	"emmcload=ext4load mmc 0:1 0x4A080000 boot/Image.gz;ext4load mmc 0:1 0x48000000 boot/r9a07g044l-smarc-rzg2l.dtb;run prodemmcbootargs \0" \
+        "bootcmd_check=mmc dev 1;" \
+		"if fatload mmc 1  ${loadaddr}  ${script}; then " \
+			"source ${loadaddr};" \
+		"else " \
+			"mmc dev 0; run mmcload;" \
+		"fi;\0"
 
 #define CONFIG_BOOTCOMMAND	"env default -a;run bootcmd_check;run bootimage"
 
@@ -75,4 +84,4 @@
 /* Ethernet RAVB */
 #define CONFIG_BITBANGMII_MULTI
 
-#endif /* __SMARC_RZG2L_H */
+#endif /* __MYC_RZG2L_H */

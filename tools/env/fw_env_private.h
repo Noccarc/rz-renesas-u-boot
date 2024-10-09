@@ -42,7 +42,7 @@
 #endif
 
 #ifndef CONFIG_BOOTDELAY
-#define CONFIG_BOOTDELAY	5	/* autoboot after 5 seconds	*/
+#define CONFIG_BOOTDELAY	0	/* autoboot after 0 seconds	*/
 #endif
 
 #ifndef CONFIG_BOOTCOMMAND

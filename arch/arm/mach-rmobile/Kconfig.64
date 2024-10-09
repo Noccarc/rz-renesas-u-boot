@@ -185,6 +185,11 @@ config TARGET_SMARC_RZG2L
 	help
           Support for Renesas RZ/G2L Dev Platform
 
+config TARGET_MYC_RZG2L
+        bool "RZ/G2L Dev board"
+        help
+          Support for MYiR RZ/G2L Dev Platform
+
 config TARGET_RZV2L_DEV
 	bool "RZ/V2L Dev board"
 	help
@@ -252,6 +257,7 @@ source "board/hoperun/hihope-rzg2/Kconfig"
 source "board/silinux/ek874/Kconfig"
 source "board/renesas/rzg2l-dev/Kconfig"
 source "board/renesas/rzv2l-dev/Kconfig"
+source "board/myir/myc-rzg2l/Kconfig"
 source "board/renesas/rzg2lc-dev/Kconfig"
 source "board/renesas/rzg2ul-dev/Kconfig"
 source "board/renesas/rzg3s-dev/Kconfig"

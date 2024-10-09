@@ -924,6 +924,10 @@ dtb-$(CONFIG_RCAR_GEN3) += \
 	r8a779a0-falcon-u-boot.dtb \
 	rzg2l-dev.dtb \
 	smarc-rzg2l.dtb \
+	myb-rzg2l-base.dtb \
+	myb-rzg2l.dtb \
+	myb-rzg2l-1gb.dtb \
+	myb-rzg2l-noccarc.dtb \
 	rzv2l-dev.dtb \
 	smarc-rzv2l.dtb \
 	rzg2lc-dev.dtb \

@@ -1,0 +1,196 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for the GR-Peach board
+ *
+ * Copyright (C) 2017 Jacopo Mondi <jacopo+renesas@jmondi.org>
+ * Copyright (C) 2016 Renesas Electronics
+ */
+
+/dts-v1/;
+#include <dt-bindings/gpio/gpio.h>
+#include "r9a07g044l.dtsi"
+#include "r9a07g044l-u-boot.dtsi"
+#include <dt-bindings/pinctrl/rzg2l-pinctrl.h>
+
+/ {
+	model = "smarc-rzg2l";
+	compatible = "renesas,r9a07g044l", "renesas,rzg2l";
+
+	aliases {
+		serial0 = &scif0;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	leds {
+		
+		compatible = "gpio-leds";
+		gpio0 {
+			gpios = <&P40 2 GPIO_ACTIVE_HIGH>; //98
+			label = "vab_enable";
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+        led1 {
+			gpios = <&P39 1 GPIO_ACTIVE_HIGH>; // 97
+			label = "vab_y";
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+        led2 {
+			gpios = <&P44 3  GPIO_ACTIVE_HIGH>;  //96
+			label = "vab_r";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        led3 {
+			gpios = <&P43 1  GPIO_ACTIVE_HIGH>; //95
+			label = "vab_b";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+		led4 {
+			gpios = <&P34 1 GPIO_ACTIVE_LOW>; //38
+			label = "status";
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+        gpio1 {
+			gpios = <&P27 1 GPIO_ACTIVE_HIGH>; //22
+			label = "mcu_pwr_rst";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        gpio2 {
+			gpios = <&P28 0 GPIO_ACTIVE_HIGH>; // 23
+			label = "mcu_pwr_boot0";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        gpio3 {
+			gpios = <&P37 1 GPIO_ACTIVE_HIGH>; // 25
+			label = "mpu_pwr_backup";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        gpio4 {
+			gpios = <&P29 1  GPIO_ACTIVE_HIGH>; // 26
+			label = "mpu_3v3_enable";
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+        gpio7 {
+			gpios = <&P35 1 GPIO_ACTIVE_HIGH>;  //36
+			label = "valve_enable";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        gpio9 {
+			gpios = <&P47 0 GPIO_ACTIVE_HIGH>;  //113
+			label = "mcu_sens_rst";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+        gpio10 {
+			gpios = <&P47 3 GPIO_ACTIVE_HIGH>;  //114
+			label = "mcu_sens_boot0";
+			default-state = "off";
+			linux,default-trigger = "none";
+		};
+
+		gpio11 {
+			gpios = <&P33 1 GPIO_ACTIVE_HIGH>;  //34
+			label = "usb_hub_enable";
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+	};
+
+};
+
+&pinctrl {
+
+	i2c1_pins: i2c1 {
+		pinmux = <RZG2L_PINMUX(14, 2, 1)>,
+				<RZG2L_PINMUX(14, 3, 1)>;
+	};
+
+};
+
+&xinclk {
+        clock-frequency = <24000000>;
+};
+
+&scif0 {
+	status = "okay";
+	clock = <100000000>;
+};
+
+&sdhi0 {
+	/* pinctrl placeholder
+	 * If this channel is used for interfacing with a SD card, a power enable
+	 * pin (SD0_PWR_EN) must be defined.
+	 * The SD0_PWR_EN pin is associated with P4_1.
+	 * A HIGH signal on SD0_PWR_EN will enable supply voltage for SD card.
+	*/
+	bus-width = <8>;
+	status = "okay";
+};
+
+&sdhi1 {
+	/* pinctrl placeholder
+	 * A power enable pin (SD1_PWR_EN) must be defined to interface with a
+	 * SD card.
+	 * The SD1_PWR_EN pin is associated with P39_2.
+	 * A HIGH signal on SD1_PWR_EN will enable supply voltage for SD card.
+	*/
+	bus-width = <4>;
+	status = "okay";
+};
+
+
+
+
+&i2c1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c1_pins>;
+	status = "disabled";
+
+	
+};
+
+
+&ehci0 {
+	
+	status="okay";
+};
+
+&ohci0 {
+	
+	dr_mode = "host";
+	status = "okay";
+};
+
+&ehci1 {
+	
+	status = "okay";
+};
+
+&ohci1 {
+	
+	status = "okay";
+};
+
+&hsusb {
+        status = "okay";
+};
+
+&usb2_phy1 {
+        status = "okay";
+};
+
+&usb2_phy0 {
+        status = "okay";
+};
