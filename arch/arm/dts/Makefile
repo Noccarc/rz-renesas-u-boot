@@ -928,6 +928,7 @@ dtb-$(CONFIG_RCAR_GEN3) += \
 	myb-rzg2l.dtb \
 	myb-rzg2l-1gb.dtb \
 	myb-rzg2l-noccarc.dtb \
+	myb-rzg2l-noccarc-2gb.dtb \
 	rzv2l-dev.dtb \
 	smarc-rzv2l.dtb \
 	rzg2lc-dev.dtb \
